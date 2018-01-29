@@ -102,6 +102,14 @@ public class GoodsController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
+		String publishDate = pd.getString("publishDate");	//上架时间检索
+		String downPublishDate = pd.getString("downPublishDate");		//下架时间检索
+		if(publishDate != null && !"".equals(publishDate)){
+			pd.put("publishDate", publishDate+" 00:00:00");
+		}
+		if(downPublishDate != null && !"".equals(downPublishDate)){
+			pd.put("downPublishDate", downPublishDate+" 00:00:00");
+		} 
 		page.setPd(pd);
 		List<PageData>	varList = goodsService.list(page);	//列出Goods列表
 		mv.setViewName("business/goods/goods_list");
