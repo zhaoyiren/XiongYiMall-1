@@ -33,7 +33,7 @@
 									<i class="ace-icon fa fa-times"></i>
 								</button>
 								<i class="ace-icon fa fa-check green"></i>
-								欢迎使用平台&nbsp;&nbsp;
+								欢迎使用三只松鼠管理平台&nbsp;&nbsp;
 								<strong class="green">
 									 
 								</strong>
