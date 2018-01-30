@@ -11,6 +11,10 @@ package com.xiongyi.entity.business.goods;
 		private String GOODSNAME;	//商品名称
 		private String GOODSCODE;	//商品编号
 		private String GOODSPICTURE;	//商品封面图
+		//新加变量开始
+		private String GOODSTYPE;	//商品类型
+		private String GOODSSTATE; //商品状态
+		//新加变量结束		
 		private String PUBLISHDATE;	//上货时间
 		private String DOWNPUBLISHDATE;	//下架时间
 	
@@ -32,6 +36,18 @@ package com.xiongyi.entity.business.goods;
 	}
 	public void setGOODSPICTURE(String GOODSPICTURE) {
 		this.GOODSPICTURE = GOODSPICTURE;
+	}
+	public String getGOODSTYPE() {
+		return GOODSTYPE;
+	}
+	public void setGOODSTYPE(String gOODSTYPE) {
+		GOODSTYPE = gOODSTYPE;
+	}
+	public String getGOODSSTATE() {
+		return GOODSSTATE;
+	}
+	public void setGOODSSTATE(String gOODSSTATE) {
+		GOODSSTATE = gOODSSTATE;
 	}
 	public String getPUBLISHDATE() {
 		return PUBLISHDATE;

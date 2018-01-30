@@ -28,6 +28,7 @@
 					<div class="col-xs-12">
 					
 					<form action="goodinfo/${msg }.do" name="Form" id="Form" method="post">
+						<input type="hidden" name="GOODSID" id="GOODSID" value="${pd.GOODSID}"/>
 						<input type="hidden" name="GOODINFO_ID" id="GOODINFO_ID" value="${pd.GOODINFO_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">

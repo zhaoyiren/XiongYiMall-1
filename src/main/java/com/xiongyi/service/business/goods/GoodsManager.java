@@ -5,54 +5,55 @@ import com.xiongyi.entity.Page;
 import com.xiongyi.util.PageData;
 
 /** 
- * 说明： 商品表接口
- * 创建人：XY 
- * 创建时间：2018-01-27
+ * 璇存槑锛� 鍟嗗搧琛ㄦ帴鍙�
+ * 鍒涘缓浜猴細XY 
+ * 鍒涘缓鏃堕棿锛�2018-01-27
  * @version
  */
 public interface GoodsManager{
 
-	/**新增
+	/**鏂板
 	 * @param pd
 	 * @throws Exception
 	 */
 	public void save(PageData pd)throws Exception;
 	
-	/**删除
+	/**鍒犻櫎
 	 * @param pd
 	 * @throws Exception
 	 */
 	public void delete(PageData pd)throws Exception;
 	
-	/**修改
+	/**淇敼
 	 * @param pd
 	 * @throws Exception
 	 */
 	public void edit(PageData pd)throws Exception;
 	
-	/**列表
+	/**鍒楄〃
 	 * @param page
 	 * @throws Exception
 	 */
 	public List<PageData> list(Page page)throws Exception;
 	
-	/**列表(全部)
+	/**鍒楄〃(鍏ㄩ儴)
 	 * @param pd
 	 * @throws Exception
 	 */
 	public List<PageData> listAll(PageData pd)throws Exception;
 	
-	/**通过id获取数据
+	/**閫氳繃id鑾峰彇鏁版嵁
 	 * @param pd
 	 * @throws Exception
 	 */
 	public PageData findById(PageData pd)throws Exception;
 	
-	/**批量删除
+	/**鎵归噺鍒犻櫎
 	 * @param ArrayDATA_IDS
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
+
 	
 }
 

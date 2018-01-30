@@ -42,8 +42,26 @@
 										</span>
 									</div>
 								</td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="publishDate" id="publishDate"  value="${pd.publishDate }" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="上架日期" title="上架日期"/></td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="downPublishDate" name="downPublishDate"  value="${pd.downPublishDate }" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="下架日期" title="下架日期"/></td>
+								<td style="padding-left:2px;"><input class="span10 date-picker" name="PUBLISHDATE" id="PUBLISHDATE"  value="${pd.PUBLISHDATE }" type="text" data-date-format="yyyy-mm-dd" style="width:88px;" placeholder="上架日期" title="上架日期"/></td>
+								<td style="padding-left:2px;"><input class="span10 date-picker" name="DOWNPUBLISHDATE" id="DOWNPUBLISHDATE"  value="${pd.DOWNPUBLISHDATE }" type="text" data-date-format="yyyy-mm-dd" style="width:88px;" placeholder="下架日期" title="下架日期"/></td>
+								<td style="vertical-align:top;padding-left:2px;">
+								 	<select class="chosen-select form-control" name="GOODSTYPE" id="GOODSTYPE" data-placeholder="商品类型" style="vertical-align:top;width: 120px;">
+								 	<option value=""></option>
+									<option value="">全部</option>
+									<c:forEach items="${goodsTypeList}" var="goodsType">
+										<option value="${goodsType.DICTIONARIES_ID }" <c:if test="${pd.GOODSTYPE==goodsType.DICTIONARIES_ID}">selected</c:if>>${goodsType.NAME }</option>
+									</c:forEach>
+								  	</select>
+								</td>
+								<td style="vertical-align:top;padding-left:2px;">
+								 	<select class="chosen-select form-control" name="GOODSSTATE" id="GOODSSTATE" data-placeholder="商品状态" style="vertical-align:top;width: 120px;">
+									<option value=""></option>
+									<option value="">全部</option>
+									<c:forEach items="${goodsStatusList}" var="goodsStatus">
+										<option value="${goodsStatus.DICTIONARIES_ID }" <c:if test="${pd.GOODSSTATE==goodsStatus.DICTIONARIES_ID}">selected</c:if>>${goodsStatus.NAME }</option>
+									</c:forEach>
+								  	</select>
+								</td>
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
@@ -60,8 +78,10 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">商品名称</th>
 									<th class="center">商品编号</th>
+									<th class="center">商品类型</th>
+									<th class="center">商品状态</th>
 									<th class="center">商品封面图</th>
-									<th class="center">上货时间</th>
+									<th class="center">上架时间</th>
 									<th class="center">下架时间</th>
 									<th class="center">操作</th>
 								</tr>
@@ -80,7 +100,11 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.GOODSNAME}</td>
 											<td class='center'>${var.GOODSCODE}</td>
-											<td class='center'>${var.GOODSPICTURE}</td>
+											<td class='center'>${var.GOODSTYPE}</td>
+											<td class='center'>${var.GOODSSTATE}</td>
+											<td class='center'>
+											<a href="<%=basePath%>uploadFiles/uploadImgs/${var.GOODSPICTURE}" title="${var.GOODSNAME}" class="bwGal"><img src="<%=basePath%>uploadFiles/uploadImgs/${var.GOODSPICTURE}" alt="${var.GOODSNAME}" width="100"></a>
+											</td>
 											<td class='center'>${var.PUBLISHDATE}</td>
 											<td class='center'>${var.DOWNPUBLISHDATE}</td>
 											<td class="center">
@@ -93,6 +117,15 @@
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													</c:if>
+													<a class="btn btn-xs btn-success" title="上架" onclick="up('${var.GOODS_ID}');">
+														<i class="ace-icon fa fa-arrow-up bigger-120" title="上架"></i>
+													</a>
+													<a class="btn btn-xs btn-success" title="下架" onclick="down('${var.GOODS_ID}');">
+														<i class="ace-icon fa fa-arrow-down bigger-120" title="下架"></i>
+													</a>
+													<a class="btn btn-xs btn-success" title="商品详情" onclick="goodsDetail('${var.GOODS_ID}');">
+														<i class="ace-icon fa fa-signal bigger-120" title="商品详情"></i>
+													</a>
 													<c:if test="${QX.del == 1 }">
 													<a class="btn btn-xs btn-danger" onclick="del('${var.GOODS_ID}');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
@@ -256,7 +289,30 @@
 			 diag.Title ="新增";
 			 diag.URL = '<%=basePath%>goods/goAdd.do';
 			 diag.Width = 450;
-			 diag.Height = 355;
+			 diag.Height = 385;
+			 diag.CancelEvent = function(){ //关闭事件
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					 if('${page.currentPage}' == '0'){
+						 top.jzts();
+						 setTimeout("self.location=self.location",100);
+					 }else{
+						 nextPage(${page.currentPage});
+					 }
+				}
+				diag.close();
+			 };
+			 diag.show();
+		}
+		
+		//商品详情
+		function goodsDetail(goodsId) {
+			top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="新增";
+			 diag.URL = '<%=basePath%>goodinfo/goAdd.do?GOODSID='+goodsId;
+			 diag.Width = 450;
+			 diag.Height = 385;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 if('${page.currentPage}' == '0'){
@@ -284,6 +340,24 @@
 			});
 		}
 		
+		//上架
+		function up(Id){
+			top.jzts();
+			var url = "<%=basePath%>goods/up.do?GOODS_ID="+Id+"&tm="+new Date().getTime();
+			$.get(url,function(data){
+				nextPage(${page.currentPage});
+			});
+		}
+		
+		//下架
+		function down(Id){
+			top.jzts();
+			var url = "<%=basePath%>goods/down.do?GOODS_ID="+Id+"&tm="+new Date().getTime();
+			$.get(url,function(data){
+				nextPage(${page.currentPage});
+			});
+		}
+		
 		//修改
 		function edit(Id){
 			 top.jzts();
@@ -292,7 +366,7 @@
 			 diag.Title ="编辑";
 			 diag.URL = '<%=basePath%>goods/goEdit.do?GOODS_ID='+Id;
 			 diag.Width = 450;
-			 diag.Height = 355;
+			 diag.Height = 410;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 nextPage(${page.currentPage});

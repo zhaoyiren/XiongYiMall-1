@@ -84,6 +84,7 @@ public class GoodsService implements GoodsManager{
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("GoodsMapper.deleteAll", ArrayDATA_IDS);
 	}
+
 	
 }
 
